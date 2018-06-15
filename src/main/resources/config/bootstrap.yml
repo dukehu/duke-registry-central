@@ -1,0 +1,29 @@
+spring:
+    application:
+        name: duke-registry-central
+
+eureka:
+    dashboard:
+        path: /
+    instance:
+        appname: duke-registry-central
+        instance-id: ${spring.application.name}(${spring.cloud.client.ipAddress}:${server.port})
+        prefer-ip-address: true
+        lease-renewal-interval-in-seconds: 5 #租期更新时间间隔（默认30秒）
+        lease-expiration-duration-in-seconds: 10 #租期到期时间（默认90秒）
+        statusPageUrlPath: ${management.context-path:/management}/info
+        healthCheckUrlPath: ${management.context-path:/management}/health
+        hostname: localhost
+    server:
+        enable-self-preservation: false
+        eviction-interval-timer-in-ms: 4000 #清理间隔（单位毫秒，默认是60*1000）
+    client:
+        fetch-registry: false       #表示是否从Eureka Server获取注册信息，默认为true。因为这是一个单点的Eureka Server，不需要同步其他的
+        register-with-eureka: false  #表示是否将自己注册到Eureka Server，默认为true。由于当前这个应用就是Eureka Server，故而设为false
+        enabled: true
+        healthcheck:
+            enabled: true
+        instance-info-replication-interval-seconds: 10
+        registry-fetch-interval-seconds: 10
+        service-url:
+            defaultZone: http://${security.user.name:duke}:${security.user.password:duke}@localhost:${server.port:8761}/eureka/

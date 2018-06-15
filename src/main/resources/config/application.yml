@@ -1,0 +1,14 @@
+server:
+  port: 8761
+
+security:
+    user:
+        name: duke
+        password: duke
+    basic:
+        enabled: true
+
+management:
+    context-path: /management
+    security:
+        enabled: false
